@@ -13,7 +13,7 @@ services:
       - NODE_ENV=production
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres123
-      - POSTGRES_HOST=host.docker.internal
+      - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_DB=lamassu
       - CA_PATH=/lamassu-data/certs/Lamassu_OP_Root_CA.pem
@@ -42,7 +42,7 @@ services:
       - NODE_ENV=production
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres123
-      - POSTGRES_HOST=host.docker.internal
+      - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_DB=lamassu
       - CA_PATH=/lamassu-data/certs/Lamassu_OP_Root_CA.pem
@@ -59,3 +59,25 @@ services:
     depends_on:
       lamassu-server:
         condition: service_started
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:15
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=lamassu
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
