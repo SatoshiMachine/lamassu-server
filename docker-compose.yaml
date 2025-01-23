@@ -8,7 +8,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./lamassu-data:/lamassu-data
+      - ./lamassu-data:/lamassu-data:rw
     environment:
       - NODE_ENV=production
       - POSTGRES_USER=postgres
@@ -37,7 +37,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - ./lamassu-data:/lamassu-data
+      - ./lamassu-data:/lamassu-data:rw
     environment:
       - NODE_ENV=production
       - POSTGRES_USER=postgres
