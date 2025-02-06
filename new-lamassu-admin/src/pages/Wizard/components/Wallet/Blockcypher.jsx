@@ -7,7 +7,7 @@ import FormRenderer from 'src/pages/Services/FormRenderer'
 
 import { SupportLinkButton, Button } from 'src/components/buttons'
 import { RadioGroup } from 'src/components/inputs'
-import schema from 'src/pages/Services/schemas'
+import blockcypherSchema from 'src/pages/Services/schemas/blockcypher'
 
 import styles from './Shared.styles'
 
@@ -95,8 +95,8 @@ const Blockcypher = ({ addData }) => {
           <FormRenderer
             value={accounts.blockcypher}
             save={save}
-            elements={schema.blockcypher.elements}
-            validationSchema={schema.blockcypher.getValidationSchema}
+            elements={blockcypherSchema.elements}
+            validationSchema={blockcypherSchema.getValidationSchema}
             buttonLabel={'Continue'}
             buttonClass={classes.formButton}
           />
