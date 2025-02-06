@@ -188,10 +188,13 @@ const Triggers = () => {
               </Label2>
               <HelpTooltip width={304}>
                 <P>
-                  This option requires a user to scan a different cryptocurrency
-                  address if they attempt to scan one that had been previously
-                  used for a transaction in your network
+                  For details about rejecting address reuse, please read the
+                  relevant knowledgebase article:
                 </P>
+                <SupportLinkButton
+                  link="https://support.lamassu.is/hc/en-us/articles/360033622211-Reject-Address-Reuse"
+                  label="Reject Address Reuse"
+                />
               </HelpTooltip>
             </Box>
           </Box>

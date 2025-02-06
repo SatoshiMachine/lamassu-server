@@ -11,7 +11,7 @@ import CloseIcon from 'src/styling/icons/action/close/zodiac.svg?react'
 import ReverseSettingsIcon from 'src/styling/icons/circle buttons/settings/white.svg?react'
 import SettingsIcon from 'src/styling/icons/circle buttons/settings/zodiac.svg?react'
 
-import { Link, Button, IconButton } from 'src/components/buttons'
+import { Link, Button, IconButton, SupportLinkButton } from 'src/components/buttons'
 import { Switch } from 'src/components/inputs'
 import { fromNamespace, toNamespace } from 'src/utils/config'
 
@@ -275,10 +275,13 @@ const Blacklist = () => {
               <Label2>{rejectAddressReuse ? 'On' : 'Off'}</Label2>
               <HelpTooltip width={304}>
                 <P>
-                  This option requires a user to scan a fresh wallet address if
-                  they attempt to scan one that had been previously used for a
-                  transaction in your network.
+                  For details about rejecting address reuse, please read the
+                  relevant knowledgebase article:
                 </P>
+                <SupportLinkButton
+                  link="https://support.lamassu.is/hc/en-us/articles/360033622211-Reject-Address-Reuse"
+                  label="Reject Address Reuse"
+                />
               </HelpTooltip>
             </Box>
             <Link color="primary" onClick={() => setShowModal(true)}>

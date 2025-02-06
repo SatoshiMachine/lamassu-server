@@ -135,7 +135,7 @@ const Commissions = ({ name: SCREEN_KEY }) => {
             />
             <SupportLinkButton
               link="https://support.lamassu.is/hc/en-us/articles/360061558352-Commissions-and-Profit-Calculations"
-              label="SCommissions and Profit Calculations"
+              label="Commissions and Profit Calculations"
               bottomSpace="1"
             />
           </HelpTooltip>
