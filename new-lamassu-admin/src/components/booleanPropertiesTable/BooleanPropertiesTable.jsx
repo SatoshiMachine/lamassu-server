@@ -27,11 +27,16 @@ const BooleanCell = ({ name }) => {
 const BooleanPropertiesTable = memo(
   ({ title, disabled, data, elements, save, forcedEditing = false }) => {
     const initialValues = R.fromPairs(
-      elements.map(it => [it.name, data[it.name]?.toString() ?? null])
+      elements.map(it => [it.name, data[it.name]?.toString() ?? 'false'])
     )
 
-    const validationSchema = R.fromPairs(
-      elements.map(it => [it.name, Yup.boolean().required()])
+    const validationSchema = Yup.object().shape(
+      R.fromPairs(
+        elements.map(it => [
+          it.name,
+          Yup.mixed().oneOf(['true', 'false', true, false]).required()
+        ])
+      )
     )
 
     const [editing, setEditing] = useState(forcedEditing)
