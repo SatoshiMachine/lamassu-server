@@ -10,7 +10,7 @@ import WarningIcon from 'src/styling/icons/warning-icon/comet.svg?react'
 
 import { Button, SupportLinkButton } from 'src/components/buttons'
 import { RadioGroup } from 'src/components/inputs'
-import schema from 'src/pages/Services/schemas'
+import _schema from 'src/pages/Services/schemas'
 
 import styles from './Shared.styles'
 import { getItems } from './getItems'
@@ -52,6 +52,7 @@ const ChooseExchange = ({ data: currentData, addData }) => {
   const [selected, setSelected] = useState(null)
   const [error, setError] = useState(false)
 
+  const schema = _schema()
   const accounts = data?.accounts ?? []
   const accountsConfig = data?.accountsConfig ?? []
 

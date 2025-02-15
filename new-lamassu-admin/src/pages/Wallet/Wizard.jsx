@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Modal from 'src/components/Modal'
 import * as Yup from 'yup'
 
-import schema from 'src/pages/Services/schemas'
+import _schema from 'src/pages/Services/schemas'
 import { toNamespace } from 'src/utils/config'
 
 import WizardSplash from './WizardSplash'
@@ -21,6 +21,7 @@ const removeDeprecated = R.filter(({ deprecated }) => !deprecated)
 
 const getItems = (accountsConfig, accounts, type, crypto) => {
   const fConfig = removeDeprecated(filterConfig(crypto, type)(accountsConfig))
+  const schema = _schema()
 
   const find = code => accounts && accounts[code]
 
@@ -38,6 +39,7 @@ const getItems = (accountsConfig, accounts, type, crypto) => {
 const Wizard = ({
   coin,
   onClose,
+  schemas,
   accountsConfig,
   accounts,
   fiatCurrency,
@@ -128,6 +130,7 @@ const Wizard = ({
       )}
       {step !== 0 && (
         <WizardStep
+          schemas={schemas}
           coin={coin.display}
           fiatCurrency={fiatCurrency}
           error={error}

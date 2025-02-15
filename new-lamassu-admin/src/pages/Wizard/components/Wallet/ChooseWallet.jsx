@@ -9,7 +9,7 @@ import WarningIcon from 'src/styling/icons/warning-icon/comet.svg?react'
 
 import { Button, SupportLinkButton } from 'src/components/buttons'
 import { RadioGroup } from 'src/components/inputs'
-import schema from 'src/pages/Services/schemas'
+import _schema from 'src/pages/Services/schemas'
 import bitgo from 'src/pages/Services/schemas/singlebitgo'
 
 import styles from './Shared.styles'
@@ -54,6 +54,8 @@ const isLocalHosted = it =>
 
 const ChooseWallet = ({ data: currentData, addData }) => {
   const classes = useStyles()
+  // no need to fetch exchange config here
+  const schema = _schema()
   const { data } = useQuery(GET_CONFIG)
   const [saveAccounts] = useMutation(SAVE_ACCOUNTS, {
     onCompleted: () => submit()

@@ -10,7 +10,7 @@ import WarningIcon from 'src/styling/icons/warning-icon/comet.svg?react'
 
 import { ActionButton } from 'src/components/buttons'
 import { RadioGroup } from 'src/components/inputs'
-import schema from 'src/pages/Services/schemas'
+import mailgunSchema from 'src/pages/Services/schemas/mailgun'
 import styles from 'src/pages/Wizard/Radio.styles'
 import { fromNamespace, toNamespace, namespaces } from 'src/utils/config'
 
@@ -125,8 +125,8 @@ const Mailgun = () => {
           <FormRenderer
             value={accounts.mailgun}
             save={saveAccount}
-            elements={schema.mailgun.elements}
-            validationSchema={schema.mailgun.validationSchema}
+            elements={mailgunSchema.elements}
+            validationSchema={mailgunSchema.validationSchema}
             buttonLabel={'Save'}
           />
         </>

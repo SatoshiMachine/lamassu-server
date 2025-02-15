@@ -11,7 +11,6 @@ import FormRenderer from 'src/pages/Services/FormRenderer'
 import { Button } from 'src/components/buttons'
 import { RadioGroup, Autocomplete } from 'src/components/inputs'
 import { NumberInput } from 'src/components/inputs/formik'
-import schema from 'src/pages/Services/schemas'
 import { startCase } from 'src/utils/string'
 
 import styles from './WizardStep.styles'
@@ -55,6 +54,7 @@ const reducer = (state, action) => {
 const WizardStep = ({
   type,
   schema: stepSchema,
+  schemas,
   coin,
   name,
   error,
@@ -176,8 +176,8 @@ const WizardStep = ({
       {form && (
         <FormRenderer
           save={it => innerContinue({ [type]: form.code }, { [form.code]: it })}
-          elements={schema[form.code].elements}
-          validationSchema={schema[form.code].validationSchema}
+          elements={schemas[form.code].elements}
+          validationSchema={schemas[form.code].validationSchema}
           value={getValue(form.code)}
           buttonLabel={label}
         />
