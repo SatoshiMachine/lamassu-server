@@ -21,7 +21,7 @@ const initialValues = {
 }
 
 const validationSchema = Yup.object().shape({
-  code: Yup.string().required().trim().max(25),
+  code: Yup.string().required().trim().max(25).matches(/^\S*$/, 'No whitespace allowed'),
   discount: Yup.number().required().min(0).max(100)
 })
 
@@ -50,10 +50,11 @@ const PromoCodesModal = ({ showModal, onClose, errorMsg, addCode }) => {
             onSubmit={({ code, discount }) => {
               handleAddCode(code, discount)
             }}>
-            <Form id="promo-form" className={classes.form}>
-              <H3 className={classes.modalLabel1}>Promo code name</H3>
-              <Field
-                name="code"
+            {({ errors }) => (
+              <Form id="promo-form" className={classes.form}>
+                <H3 className={classes.modalLabel1}>Promo code name</H3>
+                <Field
+                  name="code"
                 autoFocus
                 size="lg"
                 autoComplete="off"
@@ -91,15 +92,20 @@ const PromoCodesModal = ({ showModal, onClose, errorMsg, addCode }) => {
                 </TL1>
               </div>
               <div className={classes.footer}>
-                {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
+                {(errorMsg || !R.isEmpty(errors)) && (
+                  <ErrorMessage>
+                    {errorMsg || R.head(R.values(errors))}
+                  </ErrorMessage>
+                )}
                 <Button
                   type="submit"
                   form="promo-form"
                   className={classes.submit}>
                   Add code
                 </Button>
-              </div>
-            </Form>
+                </div>
+              </Form>
+            )}
           </Formik>
         </Modal>
       )}
