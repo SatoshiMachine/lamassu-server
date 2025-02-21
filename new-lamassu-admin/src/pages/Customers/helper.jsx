@@ -453,14 +453,16 @@ const customerDataSchemas = {
     documentNumber: Yup.string().required(),
     dateOfBirth: Yup.string()
       .test({
-        test: val => isValid(parse(new Date(), 'yyyy-MM-dd', val))
+        test: val => isValid(parse(new Date(), 'yyyy-MM-dd', val)),
+        message: 'Date must be in format YYYY-MM-DD'
       })
       .required(),
     gender: Yup.string().required(),
     country: Yup.string().required(),
     expirationDate: Yup.string()
       .test({
-        test: val => isValid(parse(new Date(), 'yyyy-MM-dd', val))
+        test: val => isValid(parse(new Date(), 'yyyy-MM-dd', val)),
+        message: 'Date must be in format YYYY-MM-DD'
       })
       .required()
   }),
@@ -543,9 +545,12 @@ const tryFormatDate = rawDate => {
 }
 
 const formatDates = values => {
-  R.forEach(elem => {
-    values[elem] = tryFormatDate(values[elem])
-  })(['dateOfBirth', 'expirationDate'])
+  R.map(
+    elem =>
+      (values[elem] = format('yyyyMMdd')(
+        parse(new Date(), 'yyyy-MM-dd', values[elem])
+      ))
+  )(['dateOfBirth', 'expirationDate'])
   return values
 }
 
