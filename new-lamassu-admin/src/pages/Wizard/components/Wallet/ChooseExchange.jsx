@@ -118,7 +118,7 @@ const ChooseExchange = ({ data: currentData, addData }) => {
             value={accounts[selected]}
             save={saveExchange(selected)}
             elements={schema[selected].elements}
-            validationSchema={schema[selected].validationSchema}
+            validationSchema={schema[selected].getValidationSchema(accounts[selected])}
             buttonLabel={'Continue'}
             buttonClass={classes.formButton}
           />

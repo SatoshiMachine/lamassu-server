@@ -62,6 +62,7 @@ const WizardStep = ({
   maxSteps,
   lastStep,
   isLastStep,
+  accounts,
   onContinue,
   fiatCurrency,
   filled,
@@ -177,7 +178,7 @@ const WizardStep = ({
         <FormRenderer
           save={it => innerContinue({ [type]: form.code }, { [form.code]: it })}
           elements={schemas[form.code].elements}
-          validationSchema={schemas[form.code].validationSchema}
+          validationSchema={schemas[form.code].getValidationSchema(accounts[form.code])}
           value={getValue(form.code)}
           buttonLabel={label}
         />
