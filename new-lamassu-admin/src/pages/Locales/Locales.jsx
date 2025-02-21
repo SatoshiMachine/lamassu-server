@@ -8,6 +8,7 @@ import { HelpTooltip } from 'src/components/Tooltip'
 import Section from 'src/components/layout/Section'
 import TitleSection from 'src/components/layout/TitleSection'
 import { P } from 'src/components/typography'
+import _schemas from 'src/pages/Services/schemas'
 import Wizard from 'src/pages/Wallet/Wizard'
 import { WalletSchema } from 'src/pages/Wallet/helper'
 
@@ -68,6 +69,12 @@ const SAVE_CONFIG = gql`
   }
 `
 
+const GET_MARKETS = gql`
+  query getMarkets {
+    getMarkets
+  }
+`
+
 const FiatCurrencyChangeAlert = ({ open, close, save }) => {
   const classes = useStyles()
 
@@ -107,6 +114,9 @@ const Locales = ({ name: SCREEN_KEY }) => {
   const [isEditingDefault, setEditingDefault] = useState(false)
   const [isEditingOverrides, setEditingOverrides] = useState(false)
   const { data } = useQuery(GET_DATA)
+  const { data: marketsData } = useQuery(GET_MARKETS)
+  const schemas = _schemas(marketsData?.getMarkets)
+
   const [saveConfig] = useMutation(SAVE_CONFIG, {
     onCompleted: () => setWizard(false),
     refetchQueries: () => ['getData'],
@@ -234,6 +244,7 @@ const Locales = ({ name: SCREEN_KEY }) => {
       </Section>
       {wizard && (
         <Wizard
+          schemas={schemas}
           coin={R.find(R.propEq('code', wizard))(cryptoCurrencies)}
           onClose={() => setWizard(false)}
           save={wizardSave}
