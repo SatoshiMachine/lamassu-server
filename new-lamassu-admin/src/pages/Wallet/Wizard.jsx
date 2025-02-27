@@ -135,6 +135,7 @@ const Wizard = ({
           fiatCurrency={fiatCurrency}
           error={error}
           step={step}
+          accounts={accounts}
           maxSteps={MAX_STEPS}
           lastStep={lastStep}
           isLastStep={isLastStep}

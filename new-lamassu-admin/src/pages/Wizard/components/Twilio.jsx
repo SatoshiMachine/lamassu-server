@@ -138,7 +138,7 @@ function Twilio({ doContinue }) {
               save={save}
               value={accounts.twilio}
               elements={twilio.elements}
-              validationSchema={twilio.validationSchema}
+              validationSchema={twilio.getValidationSchema(accounts.twilio)}
               buttonLabel={'Continue'}
               buttonClass={classes.formButton}
             />

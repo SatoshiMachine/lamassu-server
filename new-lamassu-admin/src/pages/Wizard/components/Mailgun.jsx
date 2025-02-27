@@ -126,7 +126,7 @@ const Mailgun = () => {
             value={accounts.mailgun}
             save={saveAccount}
             elements={mailgunSchema.elements}
-            validationSchema={mailgunSchema.validationSchema}
+            validationSchema={mailgunSchema.getValidationSchema(accounts.mailgun)}
             buttonLabel={'Save'}
           />
         </>
