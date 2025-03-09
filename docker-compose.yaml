@@ -6,9 +6,11 @@ services:
       target: l-s
     restart: on-failure
     ports:
-      - 3000:3000
+      - 8080:3000
     volumes:
       - ./lamassu-data:/lamassu-data:rw
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - NODE_ENV=production
       - POSTGRES_USER=postgres
@@ -25,8 +27,45 @@ services:
       - FRONT_CAMERA_DIR=/lamassu-data/frontcamera
       - OPERATOR_DATA_DIR=/lamassu-data/operatordata
       - COIN_ATM_RADAR_URL=https://coinatmradar.info/api/lamassu/
-      - HOSTNAME=127.0.0.1
+      - HOSTNAME=0.0.0.0
       - LOG_LEVEL=info
+      - TICKER_NAME=binance
+      - INITIAL_ADMIN_EMAIL=admin@example.com
+      - INITIAL_ADMIN_ROLE=superuser
+      - TZ=Europe/Paris
+      # Blockchain directory for remote node setup
+      - BLOCKCHAIN_DIR=/lamassu-data/blockchain
+      
+      # Bitcoin configuration
+      - BTC_NODE_LOCATION=remote
+      - BTC_WALLET_LOCATION=remote
+      - BTC_NODE_HOST=bitcoin
+      - BTC_NODE_PORT=8332
+      - BTC_NODE_RPC_HOST=btc-node.example.com
+      - BTC_NODE_RPC_PORT=8332
+      - BTC_NODE_USER=btcuser
+      - BTC_NODE_PASSWORD=btcpassword
+      
+      # Lightning Network configuration
+      # - LN_NODE_LOCATION=remote
+      # - LN_WALLET_LOCATION=remote
+      # - LN_NODE_HOST=ln-node.example.com
+      # - LN_NODE_PORT=9735
+      # - LN_NODE_RPC_HOST=ln-node.example.com
+      # - LN_NODE_RPC_PORT=10009
+      # - LN_NODE_USER=lnuser
+      # - LN_NODE_PASSWORD=lnpassword
+    entrypoint: |
+      /bin/sh -c '
+      /lamassu-server/bin/lamassu-server-entrypoint.sh &
+      sleep 10  # Wait for server to initialize
+      if [ ! -f /lamassu-data/.admin-created ]; then
+        echo "Creating initial admin user..."
+        node /lamassu-server/bin/lamassu-register "$${INITIAL_ADMIN_EMAIL}" "$${INITIAL_ADMIN_ROLE}"
+        touch /lamassu-data/.admin-created
+      fi
+      wait
+      '
 
   lamassu-admin-server:
     build:
@@ -35,7 +74,7 @@ services:
       target: l-a-s
     restart: on-failure
     ports:
-      - 443:443
+      - 543:443
     volumes:
       - ./lamassu-data:/lamassu-data:rw
     environment:
@@ -54,8 +93,10 @@ services:
       - FRONT_CAMERA_DIR=/lamassu-data/frontcamera
       - OPERATOR_DATA_DIR=/lamassu-data/operatordata
       - COIN_ATM_RADAR_URL=https://coinatmradar.info/api/lamassu/
-      - HOSTNAME=127.0.0.1
+      - HOSTNAME=0.0.0.0
       - LOG_LEVEL=info
+      - TICKER_NAME=binance
+      - TZ=Europe/Paris
     depends_on:
       lamassu-server:
         condition: service_started
@@ -65,8 +106,8 @@ services:
   postgres:
     image: postgres:15
     restart: always
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres123
