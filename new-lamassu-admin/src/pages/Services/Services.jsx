@@ -18,6 +18,11 @@ const GET_INFO = gql`
   query getData {
     accounts
     config
+    accountsConfig {
+      code
+      display
+      class
+    }
   }
 `
 
@@ -54,12 +59,20 @@ const Services = () => {
   })
 
   const markets = marketsData?.getMarkets
-
   const schemas = _schemas(markets)
 
-  const classes = useStyles()
+  // Debug logging
+  console.log('GraphQL Data:', data)
+  console.log('Available Schemas:', schemas)
+  console.log('Account Config:', data?.accountsConfig)
 
+  const classes = useStyles()
   const accounts = data?.accounts ?? {}
+  
+  // More debug logging
+  const availableServices = R.values(schemas)
+  console.log('Available Services:', availableServices)
+  console.log('Nostr Schema:', schemas.nostr)
 
   const getItems = (code, elements) => {
     const faceElements = R.filter(R.prop('face'))(elements)

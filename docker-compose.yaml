@@ -78,7 +78,7 @@ services:
     volumes:
       - ./lamassu-data:/lamassu-data:rw
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres123
       - POSTGRES_HOST=postgres
@@ -94,7 +94,7 @@ services:
       - OPERATOR_DATA_DIR=/lamassu-data/operatordata
       - COIN_ATM_RADAR_URL=https://coinatmradar.info/api/lamassu/
       - HOSTNAME=0.0.0.0
-      - LOG_LEVEL=info
+      - LOG_LEVEL=debug
       - TICKER_NAME=binance
       - TZ=Europe/Paris
     depends_on:

@@ -1,36 +1,37 @@
+import SecretInputFormik from 'src/components/inputs/formik/SecretInput'
+import TextInputFormik from 'src/components/inputs/formik/TextInput'
+import TextareaInputFormik from 'src/components/inputs/formik/TextareaInput'
 import * as Yup from 'yup'
-
-import {
-  SecretInput,
-  TextInput,
-  TextareaInput
-} from 'src/components/inputs/formik'
 
 import { secretTest } from './helper'
 
 export default {
   code: 'nostr',
   name: 'Nostr',
-  title: 'Nostr (Messaging)',
-  category: 'Messaging',
-  partner: true,
-  fieldClass: 'sms',
+  title: 'Nostr (SMS)',
   elements: [
     {
       code: 'privateKey',
       display: 'Private Key (hex)',
       description: 'The private key used to sign messages',
-      component: SecretInput
+      component: SecretInputFormik
     },
     {
       code: 'relays',
       display: 'Relay URLs',
       description: 'WebSocket URLs of Nostr relays (one per line)',
-      component: TextareaInput,
+      component: TextareaInputFormik,
       face: true,
       inputProps: {
         placeholder: 'wss://relay.damus.io\nwss://nos.lol\nwss://relay.nostr.band'
       }
+    },
+    {
+      code: 'toNumber',
+      display: 'Notifications Public Key (hex)',
+      description: 'The Nostr public key to send notifications to',
+      component: TextInputFormik,
+      face: true
     }
   ],
   getValidationSchema: account => {
@@ -44,6 +45,9 @@ export default {
           if (!value) return true // Allow empty to use defaults
           const urls = value.split('\n').map(u => u.trim()).filter(Boolean)
           return urls.every(url => /^wss:\/\/.+/.test(url))
-        })
+        }),
+      toNumber: Yup.string('The notifications public key must be a string')
+        .matches(/^[0-9a-f]{64}$/, 'Must be a valid 64-character hex public key')
+        .required('Notifications public key is required')
     })
   }
