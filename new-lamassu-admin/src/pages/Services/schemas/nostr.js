@@ -12,6 +12,9 @@ export default {
   code: 'nostr',
   name: 'Nostr',
   title: 'Nostr (Messaging)',
+  category: 'Messaging',
+  partner: true,
+  fieldClass: 'sms',
   elements: [
     {
       code: 'privateKey',
