@@ -18,6 +18,7 @@ import telnyx from './telnyx'
 import trongrid from './trongrid'
 import twilio from './twilio'
 import vonage from './vonage'
+import nostr from './nostr'
 
 const schemas = (markets = {}) => {
   const binance = _binance(markets?.binance)
@@ -48,7 +49,8 @@ const schemas = (markets = {}) => {
     [trongrid.code]: trongrid,
     [binance.code]: binance,
     [bitfinex.code]: bitfinex,
-    [sumsub.code]: sumsub
+    [sumsub.code]: sumsub,
+    [nostr.code]: nostr
   }
 }
 
