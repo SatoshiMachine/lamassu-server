@@ -8,3 +8,5 @@ tests/stress/machines
 tests/stress/config.json
 
 .env
+lamassu-data
+.specstory/history
