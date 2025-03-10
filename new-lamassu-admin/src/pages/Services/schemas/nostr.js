@@ -1,6 +1,5 @@
 import SecretInputFormik from 'src/components/inputs/formik/SecretInput'
 import TextInputFormik from 'src/components/inputs/formik/TextInput'
-import TextareaInputFormik from 'src/components/inputs/formik/TextareaInput'
 import * as Yup from 'yup'
 
 import { secretTest } from './helper'
@@ -20,10 +19,12 @@ export default {
       code: 'relays',
       display: 'Relay URLs',
       description: 'WebSocket URLs of Nostr relays (one per line)',
-      component: TextareaInputFormik,
+      component: TextInputFormik,
       face: true,
       inputProps: {
-        placeholder: 'wss://relay.damus.io\nwss://nos.lol\nwss://relay.nostr.band'
+        placeholder: 'wss://relay.damus.io\nwss://nos.lol\nwss://relay.nostr.band',
+        multiline: true,
+        rows: 3
       }
     },
     {
@@ -51,3 +52,4 @@ export default {
         .required('Notifications public key is required')
     })
   }
+}
