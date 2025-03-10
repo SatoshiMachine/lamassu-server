@@ -12,7 +12,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres123
       - POSTGRES_HOST=postgres
